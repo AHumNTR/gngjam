@@ -272,6 +272,7 @@ func random_point_on_planet(col: CollisionShape3D) -> Vector3:#also on npc class
 @export var endingTextures:Array[Resource]
 func finish_game():
 	var totalYellowCount:int=0
+	var totalGreyCount:int=0
 	var redDominationCount:int=dominantCountsLastRound[2]
 	print(fullyDominantCountsLastRound)
 	var blueFullyDominated:int=fullyDominantCountsLastRound[1]
@@ -280,6 +281,8 @@ func finish_game():
 	for x in npcs:
 		if(x.type==0):
 			totalYellowCount+=1
+		elif(x.type==3):
+			totalGreyCount+=1
 	endingRect.visible=true
 	print(redDominationCount>=redWinCon)
 	if(float(totalYellowCount)/npcs.size()>=yellowWinCon):
@@ -288,4 +291,6 @@ func finish_game():
 		endingRect.texture=endingTextures[1]
 	elif(redDominationCount>=redWinCon):
 		endingRect.texture=endingTextures[2]
+	elif(totalGreyCount>0):
+		endingRect.texture=endingTextures[3]
 	

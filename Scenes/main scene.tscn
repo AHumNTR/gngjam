@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bjy18fol21uqg" path="res://Textures/Endings/BlueEnd.png" id="16_6fram"]
 [ext_resource type="Texture2D" uid="uid://blo6jxgnmdo31" path="res://Textures/Buttons/Sword.png" id="16_417ef"]
 [ext_resource type="Texture2D" uid="uid://d3gml48jtnipd" path="res://Textures/UI/NextButton.png" id="16_iyct1"]
+[ext_resource type="Texture2D" uid="uid://b4qb0ucpsnfj8" path="res://Textures/Endings/GreyGoodEnd.PNG" id="16_jvku6"]
 [ext_resource type="Texture2D" uid="uid://doddulannnk3d" path="res://Textures/Buttons/SwordPressed.png" id="17_fouhs"]
 [ext_resource type="Texture2D" uid="uid://tbsxfpuhl7fd" path="res://Textures/Buttons/Move.png" id="18_2lpxp"]
 [ext_resource type="Texture2D" uid="uid://dpsayqy72h4p" path="res://Textures/Endings/RedEnd.png" id="18_vysor"]
@@ -149,7 +150,7 @@ commanderTextures = Array[Texture2D]([ExtResource("6_4akxw"), ExtResource("5_npr
 yellowWinCon = 0.8
 redWinCon = 3
 blueWinCon = 2
-endingTextures = Array[Resource]([ExtResource("15_g2ptg"), ExtResource("16_6fram"), ExtResource("18_vysor")])
+endingTextures = Array[Resource]([ExtResource("15_g2ptg"), ExtResource("16_6fram"), ExtResource("18_vysor"), ExtResource("16_jvku6")])
 
 [node name="Desk" parent="Player" unique_id=588127311 instance=ExtResource("2_c8jgc")]
 transform = Transform3D(0.2796657, -0.013677935, 0, 0.01354148, 0.27687567, -0.039452344, 0.0019272378, 0.03940524, 0.27720663, 0, -1.136, -1.416)

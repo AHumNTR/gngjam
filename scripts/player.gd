@@ -231,7 +231,7 @@ func _on_next_pressed() -> void:
 	actionRemaining= actionCountPerRound.duplicate()
 	actionTakenThisTurn=false
 	roundCount+=1
-	wheelPivot.rotation_degrees=-85-40*roundCount
+	wheelPivot.rotation_degrees=-85+40*roundCount
 	if(roundCount==9):
 		finish_game()
 	

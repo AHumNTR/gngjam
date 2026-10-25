@@ -131,7 +131,7 @@ func _on_next_pressed() -> void:
 	fullyDominantCountsLastRound=[0,0,0,0]
 	dominantCountsLastRound=[0,0,0,0]
 	for area in areas:
-		var count= [0,0,0,0]	
+		var count:Array[int]= [0,0,0,0]	
 		var totalCount=0
 		var npcsInArea=area.get_overlapping_bodies()
 		var redsInArea:Array[npc]
@@ -181,7 +181,11 @@ func _on_next_pressed() -> void:
 						for red in redsInArea:
 							red.idleTimer=3
 							red.navAgent.target_position=targetNpc.position
-							red.get_node("AnimationPlayer").play("KickAnim")#select a random red to attack
+							if(randi()%2==0):
+								red.get_node("AnimationPlayer").play("KickAnim")#select a random red to attack
+
+							elif(randi()%2==1):
+								red.get_node("AnimationPlayer").play("HeadAniim")#select a random red to attack
 			#after doing a one pass on the primary enemy target the secondary enemy
 
 			idToTarget=(mostDominant+2)%3
@@ -195,7 +199,11 @@ func _on_next_pressed() -> void:
 						for red in redsInArea:
 							red.idleTimer=3
 							red.navAgent.target_position=targetNpc.position
-							red.get_node("AnimationPlayer").play("KickAnim")#select a random red to attack
+							if(randi()%2==0):
+								red.get_node("AnimationPlayer").play("KickAnim")#select a random red to attack
+
+							elif(randi()%2==1):
+								red.get_node("AnimationPlayer").play("HeadAniim")#select a random red to attack
 
 			var needToKillCount=min(dominantTypeValues.killRate,totalCount-count[mostDominant])#either do the max eligible people we got or the class limit
 			idToTarget=(mostDominant+1)%3
@@ -215,11 +223,15 @@ func _on_next_pressed() -> void:
 						killedCount+=1
 						count[idToTarget]-=1
 						targetNpc.queue_free()
+			var texts =area.get_node("Texts")
+			for text in texts.get_children():
+				if(text is Label3D):
+					text.text=str(count[text.name.to_int()])
 			refreshNpcList()
 	actionRemaining= actionCountPerRound.duplicate()
 	actionTakenThisTurn=false
 	roundCount+=1
-	wheelPivot.rotation_degrees=-85+40*roundCount
+	wheelPivot.rotation_degrees=-85-40*roundCount
 	if(roundCount==9):
 		finish_game()
 	

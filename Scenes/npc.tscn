@@ -6,6 +6,11 @@
 [ext_resource type="Shader" uid="uid://b8jo6agjcffeg" path="res://Shaders/npc.gdshader" id="3_g6unj"]
 [ext_resource type="Texture2D" uid="uid://dlxufp5p80xh7" path="res://Textures/Npcs/RedAdam-Color.png" id="4_2xkex"]
 [ext_resource type="Texture2D" uid="uid://4cedty77rnj2" path="res://Textures/Npcs/Adam-Color_grey.png" id="5_8gudg"]
+[ext_resource type="AudioStream" uid="uid://ca28g2bs0j7g5" path="res://Sfx/walkfinal.mp3.mp3" id="7_2xkex"]
+[ext_resource type="AudioStream" uid="uid://n2abnan6cnlj" path="res://Sfx/headbong.mp3.mp3" id="7_8gudg"]
+[ext_resource type="AudioStream" uid="uid://d0be1crgdxvre" path="res://Sfx/kicksfx.mp3.mp3" id="8_b4syp"]
+[ext_resource type="AudioStream" uid="uid://mm3wfrobb7on" path="res://Sfx/lalala.mp3.mp3" id="9_a6nw3"]
+[ext_resource type="AudioStream" uid="uid://blwmh6x6jiig2" path="res://Sfx/angry.mp3.mp3" id="10_b4syp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qi7up"]
 albedo_texture = ExtResource("2_xxsvc")
@@ -144,6 +149,21 @@ tracks/15/path = NodePath("Armature/Skeleton3D:Bone.005")
 tracks/15/interp = 0
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, 1, 1, 1)
+tracks/16/type = "audio"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AudioStreamPlayer3D")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_8gudg")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/16/use_blend = true
 
 [sub_resource type="Animation" id="Animation_xxsvc"]
 resource_name = "IdleAnim"
@@ -377,6 +397,21 @@ tracks/15/path = NodePath("Armature/Skeleton3D:Bone.005")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.06666667, 1, 1, 1, 1, 0.1, 1, 1, 1, 0.9979388, 0.13333334, 1, 1, 0.99999994, 0.99128896, 0.16666667, 1, 1, 1, 0.97705656, 0.2, 1, 1, 1, 0.923331, 0.23333333, 1, 1, 1, 0.9639599, 0.26666668, 1, 1, 1, 1, 0.4, 1, 1, 1, 1, 0.46666667, 1, 1, 1.1063894, 0.843843, 0.5, 1, 1, 1, 1, 0.6666667, 1, 1, 1, 1)
+tracks/16/type = "audio"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AudioStreamPlayer3D")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("8_b4syp")
+}],
+"times": PackedFloat32Array(0.03333333)
+}
+tracks/16/use_blend = true
 
 [sub_resource type="Animation" id="Animation_6atyd"]
 length = 0.001
@@ -509,6 +544,21 @@ tracks/15/path = NodePath("Armature/Skeleton3D:Bone.005")
 tracks/15/interp = 0
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, 1, 1, 1)
+tracks/16/type = "audio"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("AudioStreamPlayer3D")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_2xkex")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/16/use_blend = true
 
 [sub_resource type="Animation" id="Animation_2xkex"]
 resource_name = "SelectAnim"
@@ -542,6 +592,7 @@ size = Vector3(2, 2, 2)
 [node name="npc" unique_id=711262677 instance=ExtResource("1_acqhf")]
 materials = Array[BaseMaterial3D]([SubResource("StandardMaterial3D_qi7up"), SubResource("StandardMaterial3D_a6nw3"), SubResource("StandardMaterial3D_b4syp"), SubResource("StandardMaterial3D_f10bm")])
 speed = 5.0
+idleTimerPeriod = 1
 type = 3
 
 [node name="Armature" parent="." index="0" unique_id=1228754572]
@@ -571,3 +622,17 @@ shape = SubResource("BoxShape3D_f0n6w")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="3" unique_id=105957262]
 path_desired_distance = 2.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="4" unique_id=835909449]
+
+[node name="0" type="AudioStreamPlayer3D" parent="." index="5" unique_id=34356341]
+stream = ExtResource("9_a6nw3")
+
+[node name="1" type="AudioStreamPlayer3D" parent="." index="6" unique_id=1241295506]
+stream = ExtResource("9_a6nw3")
+
+[node name="2" type="AudioStreamPlayer3D" parent="." index="7" unique_id=1820615645]
+stream = ExtResource("10_b4syp")
+
+[node name="3" type="AudioStreamPlayer3D" parent="." index="8" unique_id=357747998]
+stream = ExtResource("10_b4syp")

@@ -3,6 +3,7 @@ class_name npc
 @onready var geometryInstance=$Armature/Skeleton3D/Cylinder as GeometryInstance3D
 @onready var navAgent= $NavigationAgent3D as NavigationAgent3D
 @export var materials:Array[BaseMaterial3D]
+@export var idleSounds:Array[Resource]
 @export var speed:float
 @export var idleTimerPeriod=3
 var sphereRadius:float
@@ -24,6 +25,8 @@ func _physics_process(delta: float) -> void:
 		$AnimationPlayer.play("RunAnim")
 		if(navAgent.is_target_reached()):
 			$AnimationPlayer.play("IdleAnim")
+			if(randi()%10==0):
+				(get_node(str(type)) as AudioStreamPlayer3D).play()
 			idleTimer=idleTimerPeriod
 			navAgent.target_position=random_point_on_planet(currentZone.get_node("CollisionShape3D"))
 			return

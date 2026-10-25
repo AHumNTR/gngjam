@@ -562,6 +562,7 @@ material_overlay = SubResource("ShaderMaterial_xxsvc")
 [node name="AnimationPlayer" parent="." index="1" unique_id=1843326916]
 libraries/ = SubResource("AnimationLibrary_1ig1v")
 autoplay = &"RunAnim"
+next/HeadAniim = &"IdleAnim"
 next/SelectAnim = &"IdleAnim"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2" unique_id=1734407586]

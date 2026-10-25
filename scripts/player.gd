@@ -5,6 +5,7 @@ extends Node3D
 @export var rotate_speed := 0.005
 @export var npcScene: PackedScene
 @export var actionCountPerRound:Array[int]= [1,1,1]
+var wheelPivot:Control
 var yaw := 0.0
 var pitch := 0.3
 var npcs: Array[npc] 
@@ -25,6 +26,7 @@ var commanderRect:TextureRect
 func _ready() -> void:
 
 	commanderRect=get_node("/root/root/Control/Commander")
+	wheelPivot=get_node("/root/root/Control/Wheel/Control")
 	sphereRadius= ((get_node("/root/root/Sphere") as MeshInstance3D)).scale.x
 	for c in get_node("/root/root/npcs").get_children():
 		if c is npc:
@@ -57,6 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if(result.get("collider") is npc):
 				var npcToTest= ( result.get("collider")as npc )
 				if(npcToTest.type!=roundCount%3):
+
 					npcToTest.queue_free()
 					refreshNpcList()
 					actionTakenThisTurn=true
@@ -125,15 +128,20 @@ func _update_camera() -> void:
 func _on_next_pressed() -> void:
 	if(!actionTakenThisTurn):
 		return
+	fullyDominantCountsLastRound=[0,0,0,0]
+	dominantCountsLastRound=[0,0,0,0]
 	for area in areas:
 		var count= [0,0,0,0]	
 		var totalCount=0
 		var npcsInArea=area.get_overlapping_bodies()
-
+		var redsInArea:Array[npc]
 		for npcObj in 	npcsInArea:
 			if(npcObj is npc):
 				count[npcObj.type]+=1
 				totalCount+=1
+				if(npcObj.type==2):
+					redsInArea.append(npcObj)
+
 		var npcsNode=get_node("/root/root/npcs")
 		for i in range(3):
 			if(count[i]!=0):
@@ -147,14 +155,13 @@ func _on_next_pressed() -> void:
 					npcsInArea.append(spawnedNpc)
 					count[i]+=1
 					totalCount+=1
+					if(i==2):
+						redsInArea.append(spawnedNpc)
 					
 
 
 		var mostDominant=count.find(count.max())
-		if(mostDominant==2):
-			print(mostDominant)
-			print(count[mostDominant])
-			print(totalCount)
+	
 
 		if(count[mostDominant]>totalCount/2.0):
 			if(count[mostDominant]==totalCount):
@@ -171,7 +178,10 @@ func _on_next_pressed() -> void:
 						count[idToTarget]-=1
 						count[mostDominant]+=1
 						targetNpc.changeType(mostDominant)
-						print("test")
+						for red in redsInArea:
+							red.idleTimer=3
+							red.navAgent.target_position=targetNpc.position
+							red.get_node("AnimationPlayer").play("KickAnim")#select a random red to attack
 			#after doing a one pass on the primary enemy target the secondary enemy
 
 			idToTarget=(mostDominant+2)%3
@@ -182,7 +192,10 @@ func _on_next_pressed() -> void:
 						count[idToTarget]-=1
 						count[mostDominant]+=1
 						targetNpc.changeType(mostDominant)
-						print("test")
+						for red in redsInArea:
+							red.idleTimer=3
+							red.navAgent.target_position=targetNpc.position
+							red.get_node("AnimationPlayer").play("KickAnim")#select a random red to attack
 
 			var needToKillCount=min(dominantTypeValues.killRate,totalCount-count[mostDominant])#either do the max eligible people we got or the class limit
 			idToTarget=(mostDominant+1)%3
@@ -193,7 +206,6 @@ func _on_next_pressed() -> void:
 						killedCount+=1
 						count[idToTarget]-=1
 						targetNpc.queue_free()
-						print("test")
 
 			idToTarget=(mostDominant+2)%3
 
@@ -202,12 +214,12 @@ func _on_next_pressed() -> void:
 					if(targetNpc is npc and targetNpc.type==idToTarget):
 						killedCount+=1
 						count[idToTarget]-=1
-						print("test")
 						targetNpc.queue_free()
 			refreshNpcList()
 	actionRemaining= actionCountPerRound.duplicate()
 	actionTakenThisTurn=false
 	roundCount+=1
+	wheelPivot.rotation_degrees=-85+40*roundCount
 	if(roundCount==9):
 		finish_game()
 	
@@ -245,19 +257,21 @@ func random_point_on_planet(col: CollisionShape3D) -> Vector3:#also on npc class
 @export var yellowWinCon:float
 @export var redWinCon:int
 @export var blueWinCon:int
+@export var endingTextures:Array[Resource]
 func finish_game():
 	var totalYellowCount:int=0
 	var redDominationCount:int=dominantCountsLastRound[2]
 	var blueFullyDominated:int=fullyDominantCountsLastRound[1]
 	refreshNpcList()
-	print("finished")
+	var endingRect=get_node("/root/root/Control/EndingRect") as TextureRect
 	for x in npcs:
 		if(x.type==0):
 			totalYellowCount+=1
+	endingRect.visible=true
 	if(float(totalYellowCount)/npcs.size()>=yellowWinCon):
-		print("Yellow won")
-	if(redDominationCount>=redWinCon):
-		print("Red Won")
-	if(blueFullyDominated>blueWinCon):
-		print("Blue Won")
+		endingRect.texture=endingTextures[0]
+	elif(redDominationCount>=redWinCon):
+		endingRect.texture=endingTextures[1]
+	elif(blueFullyDominated>blueWinCon):
+		endingRect.texture=endingTextures[2]
 	

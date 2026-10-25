@@ -2,11 +2,26 @@
 
 [ext_resource type="Texture2D" uid="uid://b0v2dvt8s30wt" path="res://Models/world_AdamDunya-Color.png" id="1_7w5nl"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7w5nl"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.01
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtlx2"]
 resource_name = "AdamDunya"
+next_pass = SubResource("StandardMaterial3D_7w5nl")
 cull_mode = 2
 albedo_texture = ExtResource("1_7w5nl")
 roughness = 0.5
+stencil_mode = 1
+stencil_flags = 2
 metadata/_gltf_primary_texture_coord = 0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_66fh4"]

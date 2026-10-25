@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://b1508m73l3bq7"]
 
 [ext_resource type="Script" uid="uid://cuf6e6wefyd2p" path="res://scripts/player.gd" id="1_oxl4w"]
+[ext_resource type="FontFile" uid="uid://dyfvj30b3oi23" path="res://Fonts/Pangolin-Regular.ttf" id="1_yc0hw"]
 [ext_resource type="PackedScene" uid="uid://calixgnrrct5s" path="res://Models/Desk.glb" id="2_c8jgc"]
 [ext_resource type="PackedScene" uid="uid://4ick8bk2at83" path="res://Scenes/npc.tscn" id="2_kgj8u"]
+[ext_resource type="Texture2D" uid="uid://bjee0pr6y6qbg" path="res://Models/Desk_Masa-Color.png" id="2_uh1h1"]
 [ext_resource type="Script" uid="uid://bad3yrgxe7pr5" path="res://scripts/areatrigger.gd" id="3_kgj8u"]
 [ext_resource type="PackedScene" uid="uid://gkaj7vq18o62" path="res://Models/Phone.glb" id="3_kyppd"]
 [ext_resource type="Script" uid="uid://bneaffnebd3n1" path="res://scripts/npcs/typevalues.gd" id="3_oxl4w"]
@@ -17,10 +19,13 @@
 [ext_resource type="Texture2D" uid="uid://b3fdebh2fcdl7" path="res://Textures/Hands/HandPaintYellow.png" id="6_o2e0c"]
 [ext_resource type="Texture2D" uid="uid://ol8hjm20kwl7" path="res://Textures/poster.png" id="7_kyppd"]
 [ext_resource type="Texture2D" uid="uid://c30syib13ryfs" path="res://Textures/Hands/HandPaintRed.png" id="8_417ef"]
+[ext_resource type="Texture2D" uid="uid://dxhun5uvxm8co" path="res://Textures/Endings/YellowEnd.png" id="15_g2ptg"]
+[ext_resource type="Texture2D" uid="uid://bjy18fol21uqg" path="res://Textures/Endings/BlueEnd.png" id="16_6fram"]
 [ext_resource type="Texture2D" uid="uid://blo6jxgnmdo31" path="res://Textures/Buttons/Sword.png" id="16_417ef"]
 [ext_resource type="Texture2D" uid="uid://d3gml48jtnipd" path="res://Textures/UI/NextButton.png" id="16_iyct1"]
 [ext_resource type="Texture2D" uid="uid://doddulannnk3d" path="res://Textures/Buttons/SwordPressed.png" id="17_fouhs"]
 [ext_resource type="Texture2D" uid="uid://tbsxfpuhl7fd" path="res://Textures/Buttons/Move.png" id="18_2lpxp"]
+[ext_resource type="Texture2D" uid="uid://dpsayqy72h4p" path="res://Textures/Endings/RedEnd.png" id="18_vysor"]
 [ext_resource type="Texture2D" uid="uid://b4pwi3pymq7ta" path="res://Textures/Buttons/MovePressed.png" id="19_itg0h"]
 [ext_resource type="Texture2D" uid="uid://c4rpfir5wb1r3" path="res://Textures/Buttons/Switch.png" id="20_tddyt"]
 [ext_resource type="Texture2D" uid="uid://baqfjr35rvc1n" path="res://Textures/Buttons/SwitchPressed.png" id="21_iyct1"]
@@ -54,6 +59,7 @@ metadata/_custom_type_script = "uid://bneaffnebd3n1"
 
 [sub_resource type="Resource" id="Resource_g4sms"]
 script = ExtResource("3_oxl4w")
+spawnRate = 1.0
 metadata/_custom_type_script = "uid://bneaffnebd3n1"
 
 [sub_resource type="Animation" id="Animation_c8jgc"]
@@ -120,6 +126,58 @@ background_color = Color(0.8882635, 0.8882635, 0.8882635, 1)
 
 [node name="root" type="Node3D" unique_id=1136560576]
 
+[node name="Texts" type="Node3D" parent="." unique_id=1769165757]
+transform = Transform3D(1.8818241e-08, -0.4305111, -0.9025855, -1.0000001, -4.3711385e-08, 0, -3.945326e-08, 0.9025852, -0.4305112, -9.423496, 0, -4.3294225)
+visible = false
+
+[node name="Yellow" type="Label3D" parent="Texts" unique_id=393122951]
+transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 0, 1, -0.80682695, 0, 0)
+pixel_size = 0.001
+billboard = 1
+modulate = Color(0.8156863, 0.75686276, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "8"
+font = ExtResource("1_yc0hw")
+font_size = 471
+outline_size = 127
+
+[node name="Blue" type="Label3D" parent="Texts" unique_id=1258450834]
+transform = Transform3D(0.9999999, 0, 0, 3.5527137e-15, 1.0000001, -2.9802322e-08, 0, 2.9802322e-08, 1, -0.3962394, 0, 0)
+pixel_size = 0.001
+billboard = 1
+modulate = Color(0, 0, 1, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "8"
+font = ExtResource("1_yc0hw")
+font_size = 471
+outline_size = 127
+
+[node name="Red" type="Label3D" parent="Texts" unique_id=645344758]
+transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 0, 1, 0.058073036, 0, 0)
+pixel_size = 0.001
+billboard = 1
+modulate = Color(1, 0, 0, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "8"
+font = ExtResource("1_yc0hw")
+font_size = 471
+outline_size = 127
+
+[node name="Grey" type="Label3D" parent="Texts" unique_id=1851068938]
+transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 0, 1, 0.4692307, 0, 0)
+pixel_size = 0.001
+billboard = 1
+modulate = Color(0.13827193, 0.1343773, 0.15555921, 1)
+outline_modulate = Color(0, 0, 0, 0)
+text = "8"
+font = ExtResource("1_yc0hw")
+font_size = 471
+outline_size = 127
+
+[node name="Sprite3D" type="Sprite3D" parent="Texts" unique_id=1438798020]
+transform = Transform3D(0.12, 0, 0, 0, 0.04, 0, 0, 0, 0.024, 0, 0, -0.176)
+texture = ExtResource("2_uh1h1")
+
 [node name="SphereCollision" type="StaticBody3D" parent="." unique_id=746221603]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SphereCollision" unique_id=1601257319]
@@ -143,6 +201,7 @@ commanderTextures = Array[Texture2D]([ExtResource("6_4akxw"), ExtResource("5_npr
 yellowWinCon = 0.8
 redWinCon = 3
 blueWinCon = 2
+endingTextures = Array[Resource]([ExtResource("15_g2ptg"), ExtResource("16_6fram"), ExtResource("18_vysor")])
 
 [node name="Desk" parent="Player" unique_id=588127311 instance=ExtResource("2_c8jgc")]
 transform = Transform3D(0.2796657, -0.013677935, 0, 0.01354148, 0.27687567, -0.039452344, 0.0019272378, 0.03940524, 0.27720663, 0, -1.136, -1.416)
@@ -162,7 +221,7 @@ autoplay = &"camera_idle"
 [node name="npcs" type="Node3D" parent="." unique_id=1263434807]
 script = ExtResource("6_imqhe")
 npcScene = ExtResource("2_kgj8u")
-spawnAmount = Array[int]([1, 1, 3, 0])
+spawnAmount = Array[int]([1, 0, 3, 0])
 
 [node name="Control" type="Control" parent="." unique_id=79658094]
 layout_mode = 3
@@ -281,6 +340,7 @@ offset_left = 100.0
 offset_top = 100.0
 offset_right = 140.0
 offset_bottom = 140.0
+rotation = -1.4835298
 
 [node name="Indicator" type="TextureRect" parent="Control/Wheel/Control" unique_id=1511078894]
 layout_mode = 0
@@ -291,6 +351,17 @@ offset_bottom = 213.0
 rotation = -1.5009831
 texture = ExtResource("25_jkkig")
 expand_mode = 1
+
+[node name="EndingRect" type="TextureRect" parent="Control" unique_id=1190019833]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_vysor")
+expand_mode = 3
 
 [node name="Areas" type="Node3D" parent="." unique_id=556172815]
 

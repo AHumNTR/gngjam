@@ -36,7 +36,7 @@ polygons = [PackedInt32Array(0, 1, 2), PackedInt32Array(0, 3, 1), PackedInt32Arr
 
 [sub_resource type="Resource" id="Resource_kyppd"]
 script = ExtResource("3_oxl4w")
-spawnRate = 3.0
+spawnRate = 2.0
 metadata/_custom_type_script = "uid://bneaffnebd3n1"
 
 [sub_resource type="Resource" id="Resource_imqhe"]
@@ -48,8 +48,8 @@ metadata/_custom_type_script = "uid://bneaffnebd3n1"
 [sub_resource type="Resource" id="Resource_lt6vg"]
 script = ExtResource("3_oxl4w")
 spawnRate = 2.0
-switchRate = 2.0
-killRate = 1.0
+switchRate = 3.0
+killRate = 3.0
 metadata/_custom_type_script = "uid://bneaffnebd3n1"
 
 [sub_resource type="Resource" id="Resource_g4sms"]
@@ -162,6 +162,7 @@ autoplay = &"camera_idle"
 [node name="npcs" type="Node3D" parent="." unique_id=1263434807]
 script = ExtResource("6_imqhe")
 npcScene = ExtResource("2_kgj8u")
+spawnAmount = Array[int]([1, 1, 3, 0])
 
 [node name="Control" type="Control" parent="." unique_id=79658094]
 layout_mode = 3

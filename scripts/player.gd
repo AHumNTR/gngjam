@@ -12,7 +12,7 @@ var areas: Array[Area3D]
 var sphereRadius
 var roundCount:=0
 var handMode:=0
-@export var actionRemaining:= [0,9999,9999]
+@export var actionRemaining:= [0,9999,0]
 @export var typeValues:Array[type_values]
 @export var cursorImages:Array[Resource]
 enum actionNames{
@@ -37,6 +37,7 @@ func _ready() -> void:
 
 
 var targetNpc:npc=null
+var actionTakenThisTurn:bool=false
 func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -58,6 +59,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if(npcToTest.type!=roundCount%3):
 					npcToTest.queue_free()
 					refreshNpcList()
+					actionTakenThisTurn=true
 					actionRemaining[0]-=1
 		elif(handMode==1 ):
 			if(targetNpc!=null and actionRemaining[1]>0):
@@ -75,6 +77,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						targetNpc.navAgent.target_position=	random_point_on_planet((areaObject.get_node("CollisionShape3D") as CollisionShape3D))
 						actionRemaining[1]-=1
 						targetNpc.idleTimer=0
+						actionTakenThisTurn=true
 				elif(result.get("collider") is npc):
 					targetNpc.selectNpc(false)
 					targetNpc=result.get("collider") as npc
@@ -109,6 +112,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				if(npcToCheck.type!=roundCount%3):
 					npcToCheck.changeType(roundCount%3)
 					actionRemaining[2]-=1
+					actionTakenThisTurn=true
 
 
 
@@ -119,6 +123,8 @@ func _update_camera() -> void:
 	global_position = Vector3(cos(pitch) * sin(yaw), sin(pitch), cos(pitch) * cos(yaw)) * distance
 	look_at(Vector3.ZERO)
 func _on_next_pressed() -> void:
+	if(!actionTakenThisTurn):
+		return
 	for area in areas:
 		var count= [0,0,0,0]	
 		var totalCount=0
@@ -138,10 +144,17 @@ func _on_next_pressed() -> void:
 					spawnedNpc.position= random_point_on_planet(area.get_node("CollisionShape3D"))
 					spawnedNpc.navAgent.target_position=random_point_on_planet(area.get_node("CollisionShape3D"))
 					spawnedNpc.changeType(i)
+					npcsInArea.append(spawnedNpc)
+					count[i]+=1
+					totalCount+=1
 					
 
 
 		var mostDominant=count.find(count.max())
+		if(mostDominant==2):
+			print(mostDominant)
+			print(count[mostDominant])
+			print(totalCount)
 
 		if(count[mostDominant]>totalCount/2.0):
 			if(count[mostDominant]==totalCount):
@@ -158,6 +171,7 @@ func _on_next_pressed() -> void:
 						count[idToTarget]-=1
 						count[mostDominant]+=1
 						targetNpc.changeType(mostDominant)
+						print("test")
 			#after doing a one pass on the primary enemy target the secondary enemy
 
 			idToTarget=(mostDominant+2)%3
@@ -168,6 +182,8 @@ func _on_next_pressed() -> void:
 						count[idToTarget]-=1
 						count[mostDominant]+=1
 						targetNpc.changeType(mostDominant)
+						print("test")
+
 			var needToKillCount=min(dominantTypeValues.killRate,totalCount-count[mostDominant])#either do the max eligible people we got or the class limit
 			idToTarget=(mostDominant+1)%3
 			var killedCount=0
@@ -177,6 +193,7 @@ func _on_next_pressed() -> void:
 						killedCount+=1
 						count[idToTarget]-=1
 						targetNpc.queue_free()
+						print("test")
 
 			idToTarget=(mostDominant+2)%3
 
@@ -185,9 +202,11 @@ func _on_next_pressed() -> void:
 					if(targetNpc is npc and targetNpc.type==idToTarget):
 						killedCount+=1
 						count[idToTarget]-=1
+						print("test")
 						targetNpc.queue_free()
 			refreshNpcList()
-	actionRemaining=actionCountPerRound
+	actionRemaining= actionCountPerRound.duplicate()
+	actionTakenThisTurn=false
 	roundCount+=1
 	if(roundCount==9):
 		finish_game()

@@ -126,8 +126,8 @@ func _update_camera() -> void:
 	global_position = Vector3(cos(pitch) * sin(yaw), sin(pitch), cos(pitch) * cos(yaw)) * distance
 	look_at(Vector3.ZERO)
 func _on_next_pressed() -> void:
-	if(!actionTakenThisTurn):
-		return
+	#if(!actionTakenThisTurn):
+	#	return
 	fullyDominantCountsLastRound=[0,0,0,0]
 	dominantCountsLastRound=[0,0,0,0]
 	for area in areas:
@@ -273,6 +273,7 @@ func random_point_on_planet(col: CollisionShape3D) -> Vector3:#also on npc class
 func finish_game():
 	var totalYellowCount:int=0
 	var redDominationCount:int=dominantCountsLastRound[2]
+	print(fullyDominantCountsLastRound)
 	var blueFullyDominated:int=fullyDominantCountsLastRound[1]
 	refreshNpcList()
 	var endingRect=get_node("/root/root/Control/EndingRect") as TextureRect
@@ -280,10 +281,11 @@ func finish_game():
 		if(x.type==0):
 			totalYellowCount+=1
 	endingRect.visible=true
+	print(redDominationCount>=redWinCon)
 	if(float(totalYellowCount)/npcs.size()>=yellowWinCon):
 		endingRect.texture=endingTextures[0]
-	elif(redDominationCount>=redWinCon):
-		endingRect.texture=endingTextures[1]
 	elif(blueFullyDominated>blueWinCon):
+		endingRect.texture=endingTextures[1]
+	elif(redDominationCount>=redWinCon):
 		endingRect.texture=endingTextures[2]
 	

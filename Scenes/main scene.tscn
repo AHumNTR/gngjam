@@ -169,7 +169,7 @@ autoplay = &"camera_idle"
 [node name="npcs" type="Node3D" parent="." unique_id=1263434807]
 script = ExtResource("6_imqhe")
 npcScene = ExtResource("2_kgj8u")
-spawnAmount = Array[int]([0, 1, 0, 0])
+spawnAmount = Array[int]([0, 0, 5, 0])
 
 [node name="Control" type="Control" parent="." unique_id=79658094]
 layout_mode = 3
@@ -296,10 +296,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("18_vysor")
 expand_mode = 3
 
-[node name="TextureRect2" type="TextureRect" parent="Control" unique_id=426669101]
+[node name="TaskBoard" type="TextureRect" parent="Control" unique_id=426669101]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5

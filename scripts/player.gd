@@ -4,7 +4,7 @@ extends Node3D
 @export var distance := 10.0
 @export var rotate_speed := 0.005
 @export var npcScene: PackedScene
-
+@export var actionCountPerRound:Array[int]= [1,1,1]
 var yaw := 0.0
 var pitch := 0.3
 var npcs: Array[npc] 
@@ -12,7 +12,7 @@ var areas: Array[Area3D]
 var sphereRadius
 var roundCount:=0
 var handMode:=0
-var actionRemaining:= [0,9999,9999]
+@export var actionRemaining:= [0,9999,9999]
 @export var typeValues:Array[type_values]
 @export var cursorImages:Array[Resource]
 enum actionNames{
@@ -187,7 +187,7 @@ func _on_next_pressed() -> void:
 						count[idToTarget]-=1
 						targetNpc.queue_free()
 			refreshNpcList()
-	actionRemaining=[1,1,1]
+	actionRemaining=actionCountPerRound
 	roundCount+=1
 	if(roundCount==9):
 		finish_game()
@@ -223,6 +223,9 @@ func random_point_on_planet(col: CollisionShape3D) -> Vector3:#also on npc class
 	var r := cyl.radius * sqrt(randf())
 	var p: Vector3 = col.global_transform * Vector3(cos(a) * r, 0, sin(a) * r)
 	return p.normalized() * sphereRadius
+@export var yellowWinCon:float
+@export var redWinCon:int
+@export var blueWinCon:int
 func finish_game():
 	var totalYellowCount:int=0
 	var redDominationCount:int=dominantCountsLastRound[2]
@@ -232,10 +235,10 @@ func finish_game():
 	for x in npcs:
 		if(x.type==0):
 			totalYellowCount+=1
-	if(float(totalYellowCount)/npcs.size()>=0.8):
+	if(float(totalYellowCount)/npcs.size()>=yellowWinCon):
 		print("Yellow won")
-	if(redDominationCount>=3):
+	if(redDominationCount>=redWinCon):
 		print("Red Won")
-	if(blueFullyDominated>2):
+	if(blueFullyDominated>blueWinCon):
 		print("Blue Won")
 	

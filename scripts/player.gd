@@ -126,8 +126,8 @@ func _update_camera() -> void:
 	global_position = Vector3(cos(pitch) * sin(yaw), sin(pitch), cos(pitch) * cos(yaw)) * distance
 	look_at(Vector3.ZERO)
 func _on_next_pressed() -> void:
-	#if(!actionTakenThisTurn):
-	#	return
+	if(!actionTakenThisTurn):
+		return
 	fullyDominantCountsLastRound=[0,0,0,0]
 	dominantCountsLastRound=[0,0,0,0]
 	for area in areas:
